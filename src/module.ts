@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'url'
-import { defineNuxtModule, addServerHandler, addPlugin, addImports, addTemplate } from '@nuxt/kit'
+import { defineNuxtModule, addServerHandler, addPlugin, createResolver,addImports, addTemplate } from '@nuxt/kit'
 import { resolve } from 'pathe'
 import fg from 'fast-glob'
 import { Server as SocketServer, ServerOptions } from 'socket.io'
@@ -13,6 +13,8 @@ export function defineIOHandler (cb: (io: SocketServer) => void) {
   return cb
 }
 
+//add resolver to fix
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt3-socket.io',
@@ -25,6 +27,7 @@ export default defineNuxtModule<ModuleOptions>({
   async setup (options, nuxt) {
     const extGlob = '**/*.{ts,js,mjs}'
     const files: string[] = []
+    const resolver = createResolver(import.meta.url)
 
     const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
     nuxt.options.build.transpile.push(runtimeDir)
@@ -53,7 +56,7 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     if (nuxt.options.dev) {
-      const devFunctionsPath = resolve(nuxt.options.buildDir, 'io-dev-functions')
+      const devFunctionsPath = resolver.resolve(nuxt.options.buildDir, 'io-dev-functions')
 
       nuxt.hook('listen', async (httpServer) => {
         const io = new SocketServer(httpServer, options.serverOptions)
@@ -65,23 +68,23 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     if (options.addPlugin) {
-      addPlugin(resolve(runtimeDir, 'plugin.client'))
+      addPlugin(resolver.resolve(runtimeDir, 'plugin.client'))
 
       addImports([
         {
           name: 'useSocket',
-          from: resolve(runtimeDir, 'composables')
+          from: resolver.resolve(runtimeDir, 'composables')
         },
         {
           name: 'useIO',
-          from: resolve(runtimeDir, 'composables')
+          from: resolver.resolve(runtimeDir, 'composables')
         }
       ])
     }
 
     addServerHandler({
       middleware: true,
-      handler: resolve(nuxt.options.buildDir, 'io-handler.ts')
+      handler: resolver.resolve(nuxt.options.buildDir, 'io-handler.ts')
     })
 
     addTemplate({
@@ -89,7 +92,7 @@ export default defineNuxtModule<ModuleOptions>({
       write: true,
       getContents () {
         return `
-          import { createIOHandler } from '${resolve(runtimeDir, 'server')}';
+          import { createIOHandler } from '${resolver.resolve(runtimeDir, 'server')}';
           ${files.map((file, index) => `import function${index} from '${file.replace('.ts', '')}'`).join('\n')}
           export default createIOHandler({
             ${files.map((_, index) => `function${index}`).join(',\n')}
@@ -101,7 +104,7 @@ export default defineNuxtModule<ModuleOptions>({
     async function scanRemoteFunctions () {
       files.length = 0
       const updatedFiles = await fg(extGlob, {
-        cwd: resolve(nuxt.options.srcDir, 'server/socket'),
+        cwd: resolver.resolve(nuxt.options.srcDir, 'server/socket'),
         absolute: true,
         onlyFiles: true
       })
