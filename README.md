@@ -1,4 +1,4 @@
-# nuxt3-socket.io
+# inuxt3-socket.io
 
 Just another [socket.io](https://socket.io/) module for Nuxt 3.
 
@@ -7,12 +7,12 @@ This module uses the Vite server in development and `req.socket.server` in produ
 ## Install
 
 ```bash
-pnpm add nuxt3-socket.io
+pnpm add inuxt3-socket.io
 ```
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['nuxt3-socket.io'],
+  modules: ['inuxt3-socket.io'],
   socket: {
     // JSON serializable options only.
     // options object to pass when instantiating socket server.
@@ -59,7 +59,7 @@ By default, this module automatically creates a server instance. If you want acc
 ```ts
 // server/socket/whatever-file-name.ts
 
-import { defineIOHandler } from 'nuxt3-socket.io'
+import { defineIOHandler } from 'inuxt3-socket.io'
 
 export default defineIOHandler((io) => {
   io.on('connection', (socket) => {

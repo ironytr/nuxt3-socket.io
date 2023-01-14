@@ -3,6 +3,7 @@ import { defineNuxtModule, addServerHandler, addPlugin, createResolver,addImport
 import { resolve } from 'pathe'
 import fg from 'fast-glob'
 import { Server as SocketServer, ServerOptions } from 'socket.io'
+import {pathToFileURL} from 'url'
 
 export interface ModuleOptions {
   addPlugin: boolean
@@ -17,7 +18,7 @@ export function defineIOHandler (cb: (io: SocketServer) => void) {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'nuxt3-socket.io',
+    name: 'inuxt3-socket.io',
     configKey: 'socket'
   },
   defaults: {
@@ -29,8 +30,8 @@ export default defineNuxtModule<ModuleOptions>({
     const files: string[] = []
     const resolver = createResolver(import.meta.url)
 
-    const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
-    nuxt.options.build.transpile.push(runtimeDir)
+    const runtimeDir = 'runtime/' //fileURLToPath(new URL('./runtime', import.meta.url))
+    // nuxt.options.build.transpile.push(runtimeDir)
 
     nuxt.hook('builder:watch', async (e, path) => {
       if (e === 'change') { return }
@@ -56,8 +57,13 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     if (nuxt.options.dev) {
-      const devFunctionsPath = resolver.resolve(nuxt.options.buildDir, 'io-dev-functions')
+      let devFunctionsPath : any = null
 
+      if (process.platform === "win32") {
+        devFunctionsPath = pathToFileURL(resolver.resolve(nuxt.options.buildDir, 'io-dev-functions'))
+      }else{
+        devFunctionsPath = resolver.resolve(nuxt.options.buildDir, 'io-dev-functions')
+      }
       nuxt.hook('listen', async (httpServer) => {
         const io = new SocketServer(httpServer, options.serverOptions)
         const functions = await import(devFunctionsPath)

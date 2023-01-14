@@ -14,8 +14,8 @@ specifiers:
   engine.io: ^6.2.1
   eslint: ^8.28.0
   fast-glob: ^3.2.12
+  inuxt3-socket.io: 0.0.5-beta.1
   nuxt: ^3.0.0
-  nuxt3-socket.io: 'link:'
   pathe: ^1.0.0
   requrl: ^3.0.2
   socket.io: 4.5.2
@@ -26,7 +26,7 @@ dependencies:
   '@nuxt/kit': 3.0.0
   engine.io: 6.2.1_la4j7gvkgkaovg4lpn5w6kfanm
   fast-glob: 3.2.12
-  nuxt3-socket.io: 'link:'
+  inuxt3-socket.io: 0.0.5-beta.1
   pathe: 1.0.0
   requrl: 3.0.2
   socket.io: 4.5.2
@@ -3477,6 +3477,25 @@ packages:
       has: 1.0.3
       side-channel: 1.0.4
     dev: true
+
+  /inuxt3-socket.io/0.0.5-beta.1:
+    resolution: {integrity: sha512-CGpZqpDtWlgs6TxUaompqHXZosh2YFhcTAxBaPqFsaIw89zLYQXuAWSwYLayiJ2UYWoKBYii2YH3dWjMorp0+Q==}
+    dependencies:
+      '@nuxt/kit': 3.0.0
+      engine.io: 6.2.1_la4j7gvkgkaovg4lpn5w6kfanm
+      fast-glob: 3.2.12
+      inuxt3-socket.io: 'link:'
+      pathe: 1.0.0
+      requrl: 3.0.2
+      socket.io: 4.5.2
+      socket.io-client: 4.5.2
+      unctx: 2.1.1
+    transitivePeerDependencies:
+      - bufferutil
+      - rollup
+      - supports-color
+      - utf-8-validate
+    dev: false
 
   /ioredis/5.2.4:
     resolution: {integrity: sha512-qIpuAEt32lZJQ0XyrloCRdlEdUUNGG9i0UOk6zgzK6igyudNWqEBxfH6OlbnOOoBBvr1WB02mm8fR55CnikRng==}
