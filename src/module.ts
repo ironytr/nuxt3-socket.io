@@ -1,9 +1,8 @@
-import { fileURLToPath } from 'url'
+import { fileURLToPath,pathToFileURL } from 'url'
 import { defineNuxtModule, addServerHandler, addPlugin, createResolver,addImports, addTemplate } from '@nuxt/kit'
 import { resolve } from 'pathe'
 import fg from 'fast-glob'
 import { Server as SocketServer, ServerOptions } from 'socket.io'
-import {pathToFileURL} from 'url'
 
 export interface ModuleOptions {
   addPlugin: boolean
