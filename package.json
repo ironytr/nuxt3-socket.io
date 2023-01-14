@@ -1,6 +1,6 @@
 {
-  "name": "inuxt3-socket.io",
-  "version": "0.0.5-beta.8",
+  "name": "nuxt3-internal-socket",
+  "version": "0.0.5-beta.9",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -27,7 +27,7 @@
     "@nuxt/kit": "^3.0.0",
     "engine.io": "^6.2.1",
     "fast-glob": "^3.2.12",
-    "inuxt3-socket.io": "0.0.5-beta.1",
+    "nuxt3-internal-socket": "0.0.5-beta.1",
     "pathe": "^1.0.0",
     "requrl": "^3.0.2",
     "socket.io": "4.5.2",
