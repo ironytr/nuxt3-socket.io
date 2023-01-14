@@ -1,6 +1,6 @@
 {
   "name": "nuxt3-internal-socket-1",
-  "version": "0.0.3",
+  "version": "1.0.0-beta.0",
   "license": "MIT",
   "type": "module",
   "exports": {
