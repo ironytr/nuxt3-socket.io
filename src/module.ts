@@ -29,8 +29,8 @@ export default defineNuxtModule<ModuleOptions>({
     const files: string[] = []
     const resolver = createResolver(import.meta.url)
 
-    const runtimeDir = 'runtime/' //fileURLToPath(new URL('./runtime', import.meta.url))
-    // nuxt.options.build.transpile.push(runtimeDir)
+    const runtimeDir = resolver.resolve('runtime') //'runtime/' //fileURLToPath(new URL('./runtime', import.meta.url))
+    nuxt.options.build.transpile.push(runtimeDir)
 
     nuxt.hook('builder:watch', async (e, path) => {
       if (e === 'change') { return }
