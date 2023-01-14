@@ -1,6 +1,6 @@
 {
-  "name": "nuxt3-socket.io",
-  "version": "0.0.14",
+  "name": "inuxt3-socket.io",
+  "version": "0.0.1",
   "license": "MIT",
   "type": "module",
   "exports": {
